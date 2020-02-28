@@ -28,18 +28,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
        auth.authenticationProvider(userAuthenticationProvider);
+       auth.eraseCredentials(false);
     }
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
                 // 不进行权限验证的请求或资源(从配置文件中读取)
-                .antMatchers("/user/*").permitAll()
+                .antMatchers("/auth/login").permitAll()
                 // 其他的需要登陆后才能访问
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginProcessingUrl("/user/selectOne")
+                //.loginProcessingUrl("/user/selectOne")
                 // 配置登录成功自定义处理类
                 .successHandler(successLoginHandler)
                 .and()

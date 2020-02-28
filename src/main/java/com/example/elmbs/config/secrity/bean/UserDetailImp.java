@@ -6,9 +6,31 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
+
 @Data
 public class UserDetailImp implements UserDetails, Serializable {
     private static final long serialVersionUID = 1L;
+    /**
+     * ID
+     */
+    private Long id;
+    /**
+     * 头像
+     */
+    private Long avatarId;
+    /**
+     * 邮箱
+     */
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     /**
      * 用户ID

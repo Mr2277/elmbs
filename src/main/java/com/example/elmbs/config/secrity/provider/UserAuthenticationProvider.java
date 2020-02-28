@@ -1,5 +1,6 @@
 package com.example.elmbs.config.secrity.provider;
 
+import com.example.elmbs.config.jwt.JWTTokenUtil;
 import com.example.elmbs.config.secrity.bean.UserDetailImp;
 import com.example.elmbs.config.secrity.service.MultyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -24,12 +26,16 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
         String username= (String) authentication.getPrincipal();
         String password= (String) authentication.getCredentials();
         UserDetailImp userDetails= (UserDetailImp) userDetailsService.loadUserByUsername(username);
-        System.out.println(userDetails.getUsername());
-        System.out.print(userDetails.getPassword());
+        System.out.println(userDetails.getUsername()+"##UserAuthenticationProvider");
+        System.out.println(userDetails.getPassword()+"##UserAuthenticationProvider");
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         userDetails.setAuthorities(authorities);
-        return new UsernamePasswordAuthenticationToken(userDetails,password,authorities);
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken=new UsernamePasswordAuthenticationToken(userDetails,password,authorities);
+        String token= (String) JWTTokenUtil.createAccessToken(userDetails);
+        System.out.println(token+"##UserAuthenticationProvider");
+        SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+        return usernamePasswordAuthenticationToken;
     }
 
     @Override

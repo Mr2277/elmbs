@@ -2,6 +2,7 @@ package com.example.elmbs.controller;
 
 import com.example.elmbs.entity.User;
 import com.example.elmbs.service.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -30,6 +31,11 @@ public class UserController {
     @GetMapping("/selectOne")
     public User selectOne(Long id) {
         return this.userService.queryById(id);
+    }
+    @GetMapping("/test")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public String test(){
+        return "test";
     }
 
 }
