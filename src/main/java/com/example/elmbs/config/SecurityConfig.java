@@ -2,6 +2,7 @@ package com.example.elmbs.config;
 
 import com.example.elmbs.config.secrity.handler.SuccessLoginHandler;
 import com.example.elmbs.config.secrity.provider.UserAuthenticationProvider;
+import com.example.elmbs.filter.JWTAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -45,6 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(successLoginHandler)
                 .and()
                 // 开启跨域
+                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
+
                 .cors()
                 .and()
                 // 取消跨站请求伪造防护

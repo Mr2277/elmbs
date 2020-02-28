@@ -1,8 +1,8 @@
 package com.example.elmbs.config.secrity.provider;
 
-import com.example.elmbs.config.jwt.JWTTokenUtil;
 import com.example.elmbs.config.secrity.bean.UserDetailImp;
 import com.example.elmbs.config.secrity.service.MultyUserDetailsService;
+import com.example.elmbs.utils.JwtTokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,7 +32,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
         authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         userDetails.setAuthorities(authorities);
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken=new UsernamePasswordAuthenticationToken(userDetails,password,authorities);
-        String token= (String) JWTTokenUtil.createAccessToken(userDetails);
+        String token = JwtTokenUtils.createToken(username,"ROLE_ADMIN");
         System.out.println(token+"##UserAuthenticationProvider");
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
         return usernamePasswordAuthenticationToken;

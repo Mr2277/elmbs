@@ -29,8 +29,7 @@ public class JwtTokenUtils {
     private static final long EXPIRATION_REMEMBER = 604800L;
 
     // 创建token
-    public static String createToken(String username,String role, boolean isRememberMe) {
-        long expiration = isRememberMe ? EXPIRATION_REMEMBER : EXPIRATION;
+    public static String createToken(String username,String role) {
         HashMap<String, Object> map = new HashMap<>();
         map.put(ROLE_CLAIMS, role);
         return Jwts.builder()
@@ -39,7 +38,7 @@ public class JwtTokenUtils {
                 .setIssuer(ISS)
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + 1 * 1000))
                 .compact();
     }
 
