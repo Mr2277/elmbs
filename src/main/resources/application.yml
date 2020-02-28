@@ -1,5 +1,5 @@
 server:
-  port: 7777
+  port: 8001
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -32,3 +32,6 @@ spring:
 mybatis:
   mapperLocations: classpath:mapper/*.xml
   typeAliasesPackage: com.example.elmbs.dao
+logging:
+  level:
+    com.example.elmbs.dao : debug

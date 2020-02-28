@@ -76,4 +76,15 @@ public class UserServiceImpl implements UserService {
     public boolean deleteById(Long id) {
         return this.userDao.deleteById(id) > 0;
     }
+
+    /**
+     * 通过名字查询数据
+     *
+     * @param name
+     * @return user 实例对象
+     */
+    @Override
+    public User loadUserByUsername(String name) {
+        return this.userDao.loadUserByUsername(name);
+    }
 }

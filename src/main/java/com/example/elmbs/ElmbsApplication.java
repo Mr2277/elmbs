@@ -1,10 +1,13 @@
 package com.example.elmbs;
 
+import com.example.elmbs.config.secrity.provider.UserAuthenticationProvider;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.sql.DataSource;
 
@@ -17,11 +20,12 @@ public class ElmbsApplication implements CommandLineRunner {
     }
     @Autowired
     DataSource dataSource;
-
+    @Autowired
+    private UserAuthenticationProvider userAuthenticationProvider;
     @Override
     public void run(String... args) throws Exception {
-        System.out.println(dataSource.getClass().getName());
-
-        System.out.println("DATASOURCE="+dataSource);
+        if(userAuthenticationProvider!=null){
+            System.out.println("ok");
+        }
     }
 }

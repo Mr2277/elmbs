@@ -68,4 +68,12 @@ public interface UserDao {
      */
     int deleteById(Long id);
 
+    /**
+     * 通过名字查询数据
+     *
+     * @param name
+     * @return user 实例对象
+     */
+    User loadUserByUsername(String name);
+
 }
