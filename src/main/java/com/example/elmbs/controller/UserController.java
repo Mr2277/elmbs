@@ -32,8 +32,9 @@ public class UserController {
     public User selectOne(Long id) {
         return this.userService.queryById(id);
     }
+
     @GetMapping("/test")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    //@PreAuthorize("hasAnyRole('ADMIN')")
     public String test(){
         return "test";
     }
