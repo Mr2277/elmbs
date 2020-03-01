@@ -38,6 +38,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 不进行权限验证的请求或资源(从配置文件中读取)
                 .antMatchers("/auth/*").permitAll()
                 // 其他的需要登陆后才能访问
+                .antMatchers("/login").permitAll()
+                .antMatchers("/api/menus/*").permitAll()
+
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -46,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(successLoginHandler)
                 .and()
                 // 开启跨域
-                //.addFilter(new JWTAuthorizationFilter(authenticationManager()))
+                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
                 .cors()
                 .and()
                 // 取消跨站请求伪造防护

@@ -3,6 +3,7 @@ package com.example.elmbs.config.secrity.provider;
 import com.example.elmbs.config.secrity.bean.UserDetailImp;
 import com.example.elmbs.config.secrity.service.MultyUserDetailsService;
 import com.example.elmbs.utils.JwtTokenUtils;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,19 +22,21 @@ import java.util.Set;
 public class UserAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     private MultyUserDetailsService userDetailsService;
+    @SneakyThrows
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username= (String) authentication.getPrincipal();
         String password= (String) authentication.getCredentials();
         UserDetailImp userDetails= (UserDetailImp) userDetailsService.loadUserByUsername(username);
-        System.out.println(userDetails.getUsername()+"##UserAuthenticationProvider");
-        System.out.println(userDetails.getPassword()+"##UserAuthenticationProvider");
+
+        if(userDetails == null  /* !(password.equals(userDetails.getPassword()))*/){
+            throw new Exception("密码不对");
+        }
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         userDetails.setAuthorities(authorities);
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken=new UsernamePasswordAuthenticationToken(userDetails,password,authorities);
-        String token = JwtTokenUtils.createToken(username,"ROLE_ADMIN");
-        System.out.println(token+"##UserAuthenticationProvider");
+
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
         return usernamePasswordAuthenticationToken;
     }

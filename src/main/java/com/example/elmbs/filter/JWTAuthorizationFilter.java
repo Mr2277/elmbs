@@ -1,7 +1,9 @@
 package com.example.elmbs.filter;
 
 import com.example.elmbs.utils.JwtTokenUtils;
+import com.example.elmbs.utils.SecProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,10 +32,9 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws IOException, ServletException {
-        System.out.println("JWTAuthorizationFilter");
-        String tokenHeader = request.getHeader(JwtTokenUtils.TOKEN_HEADER);
+        String tokenHeader = request.getHeader(SecProperties.getHeader());
         // 如果请求头中没有Authorization信息则直接放行了
-        if (tokenHeader == null || !tokenHeader.startsWith(JwtTokenUtils.TOKEN_PREFIX)) {
+        if (tokenHeader == null || !tokenHeader.startsWith(SecProperties.getTokenStartWith())) {
             chain.doFilter(request, response);
             return;
         }

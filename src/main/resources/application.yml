@@ -35,12 +35,16 @@ mybatis:
 logging:
   level:
     com.example.elmbs.dao : debug
+#jwt
 jwt:
-  # 密匙KEY
-  secret: JWTSecret
-  # HeaderKEY
-  tokenHeader: Authorization
-  # Token前缀字符
-  tokenPrefix: Mr2277
-  # 过期时间 单位秒 1天后过期=86400 7天后过期=604800
-  expiration: 86400
+  header: Authorization
+  # 令牌前缀
+  token-start-with: Bearer
+  # 必须使用最少88位的Base64对该令牌进行编码
+  base64-secret: ZmQ0ZGI5NjQ0MDQwY2I4MjMxY2Y3ZmI3MjdhN2ZmMjNhODViOTg1ZGE0NTBjMGM4NDA5NzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1ODVkZDU5Y2Y3OGYwZWE1NzUzNWQ2YjFjZDc0NGMxZWU2MmQ3MjY1NzJmNTE0MzI=
+  # 令牌过期时间 此处单位/毫秒 ，默认4小时，可在此网站生成 https://www.convertworld.com/zh-hans/time/milliseconds.html
+  token-validity-in-seconds: 14400000
+  # 在线用户key
+  online-key: online-token
+  # 验证码
+  code-key: code-key
