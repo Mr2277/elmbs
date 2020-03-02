@@ -1,5 +1,6 @@
 package com.example.elmbs.config.secrity.provider;
 
+import com.example.elmbs.config.secrity.bean.JwtUser;
 import com.example.elmbs.config.secrity.bean.UserDetailImp;
 import com.example.elmbs.config.secrity.service.MultyUserDetailsService;
 import com.example.elmbs.utils.JwtTokenUtils;
@@ -27,14 +28,14 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username= (String) authentication.getPrincipal();
         String password= (String) authentication.getCredentials();
-        UserDetailImp userDetails= (UserDetailImp) userDetailsService.loadUserByUsername(username);
+        JwtUser userDetails= (JwtUser) userDetailsService.loadUserByUsername(username);
 
         if(userDetails == null  /* !(password.equals(userDetails.getPassword()))*/){
             throw new Exception("密码不对");
         }
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        userDetails.setAuthorities(authorities);
+        //userDetails.setAuthorities(authorities);
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken=new UsernamePasswordAuthenticationToken(userDetails,password,authorities);
 
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);

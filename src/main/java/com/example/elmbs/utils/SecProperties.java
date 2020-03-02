@@ -29,22 +29,22 @@ public class SecProperties {
     /** 必须使用最少88位的Base64对该令牌进行编码 */
     @Value("${jwt.base64-secret}")
 
-    private static String base64Secret;
+    private static String base64Secret="ZmQ0ZGI5NjQ0MDQwY2I4MjMxY2Y3ZmI3MjdhN2ZmMjNhODViOTg1ZGE0NTBjMGM4NDA5NzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1ODVkZDU5Y2Y3OGYwZWE1NzUzNWQ2YjFjZDc0NGMxZWU2MmQ3MjY1NzJmNTE0MzI";
 
     /** 令牌过期时间 此处单位/毫秒 */
     @Value("${jwt.token-validity-in-seconds}")
 
-    private static Long tokenValidityInSeconds;
+    private static Long tokenValidityInSeconds=14400000L;
 
     /** 在线用户 key，根据 key 查询 redis 中在线用户的数据 */
     @Value("${jwt.online-key}")
 
-    private static String onlineKey;
+    private static String onlineKey="online-token";
 
     /** 验证码 key */
     @Value("${jwt.code-key}")
 
-    private static String codeKey;
+    private static String codeKey="code-key";
 
     public static String getTokenStartWith() {
         return tokenStartWith + " ";
